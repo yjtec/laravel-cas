@@ -1,0 +1,23 @@
+{
+    "name": "kidkang/laravel-cas",
+    "description": "laravel cas client",
+    "authors": [
+        {
+            "name": "kidkang",
+            "email": "723616880@qq.com"
+        }
+    ],
+    "require": {
+        "yjtec/support": "^1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yjtec\\Cas\\ServiceProvider"
+            ],
+            "aliases": {
+                "Cas": "Yjtec\\Cas\\Cas"
+            }
+        }
+    }
+}
