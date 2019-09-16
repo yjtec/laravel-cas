@@ -1,6 +1,7 @@
 <?php
 namespace Yjtec\Cas;
 use Closure;
+use Auth;
 class AuthCasMiddleware
 {
     /**
@@ -13,17 +14,11 @@ class AuthCasMiddleware
     public function handle($request, Closure $next)
     {
 
-        if($request->has('ticket')){
-            app('cas')->checkTicket(
-                $request->ticket,
-                function($data){
-                    session()->put('cas_login',$data);
-                    session()->save();
-                }
-            );
-        }else{
-            app('cas')->checkLogin();
-        }
-        return $next($request);
+        return Auth::guard('cas')->check() ?
+        $next($request) :
+        response()->json([
+            'errcode' => 'APP_TICKET_FAIL',
+            'errmsg'  => config('code.APP_TICKET_FAIL')[1],
+        ], 433);
     }
 }
